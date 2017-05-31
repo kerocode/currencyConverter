@@ -1,0 +1,51 @@
+<md-content layout="row">
+  <header layout-fill>
+    <acme-navbar creation-date="main.creationDate"></acme-navbar>
+  </header>
+</md-content>
+
+<md-content layout="row" class="md-padding" layout-align="center center">
+  <md-card class="md-padding">
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline"> Currency Converter</span>
+      </md-card-title-text>
+    </md-card-title>
+    <md-card-content layout="row" layout-align="end center">
+      <div layout="row">
+        <md-input-container>
+          <label>Amount</label>
+          <input ng-model="rate.input.amount" type="number">
+        </md-input-container>
+        <md-input-container>
+          <label>From</label>
+          <md-select ng-model="rate.input.currencyFrom" md-on-close="rate.getBase(rate.input.currencyFrom)" ng-change="rate.detectChange(rate.input.currencyFrom)">
+            <md-option ng-repeat="cf in rate.rates" ng-value="cf">
+              {{cf}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container>
+          <label>To</label>
+          <md-select ng-model="rate.input.currencyTo" ng-change="rate.detectChangeTo()">
+            <md-option ng-repeat="ct in rate.rates" ng-value="ct" ng-disabled="ct === rate.input.currencyFrom">
+              {{ct}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+      </div>
+    </md-card-content>
+    <div layout="row" layout-align="center center">
+      <md-button class="md-raised md-primary" style="color:white; font-weight:bold;" ng-disabled="!rate.rateObj.base" ng-click="rate.Convert()">Convert</md-button>
+    </div>
+    <div layout="row" layout-align="center center" ng-if="rate.Cost">
+      <p>
+
+        <span style="color:#9C27B0; font-weight:bold;"> {{rate.input.currencyFrom}}</span> {{ rate.input.amount }} =
+        <span style="color:#00BCD4; font-weight:bold;"> {{rate.input.currencyTo}}</span>
+        <span> {{rate.Cost}} </span>
+
+      </p>
+    </div>
+  </md-card>
+</md-content>
